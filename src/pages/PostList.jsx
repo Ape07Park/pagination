@@ -24,17 +24,17 @@ export function PostList() {
 
     // 타입과 검색어를 받아서 쿼리로 조합하기
     const handleQuery = (searchTerm, searchType, sortType) => {
+
         const newQuery = `${searchType}_like=${searchTerm}${sortType ? `&_sort=${sortType}` : ''}`;
         setQuery(newQuery);
     };
-
-    // 정렬 기준을 적용해 다시 쿼리를 날려 랜더링 시키기 
-    
 
     return (
         <>
             <h2>리스트</h2>
             {/* 검색 */}
+
+            {/* 기본으로 설정한 값이 들어가지 내가 원하는 값이 들어가는 것이 아님 */}
             <SearchBar onTerm={(term) => handleQuery(term, type, sortType)} onType={setType} onSort={setSortType}/>
 
             {/* 아이템 + 페이징 */}

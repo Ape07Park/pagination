@@ -2,7 +2,7 @@ import { useState } from "react";
 
 function SearchBar({ onTerm, onType, onSort }) {
     const [term, setTerm] = useState("");
-    const [type, setType] = useState("title"); // 기본값을 title로 설정
+    const [type, setType] = useState("title");
     const [sortType, setSortType] = useState("title");
 
     const handleInputChange = (event) => {
