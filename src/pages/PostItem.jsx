@@ -1,7 +1,6 @@
 
 import { useEffect, useState } from "react";
 import Paging from "../components/Paging";
-import SearchBar from "../components/SearchBar";
 
 // 내용물
 export function PostItem ({posts}) {
