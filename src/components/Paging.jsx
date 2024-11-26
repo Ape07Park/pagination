@@ -7,7 +7,7 @@ export function Paging ({totalCount, onPageChange, activePage, itemsCountPerPage
     const handlePageChange = (page) => {
         onPageChange(page);
     };
-  
+    
     return (
       <Pagination
         activePage={activePage} // 현재 페이지

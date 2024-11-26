@@ -1,7 +1,8 @@
-export function SearchBar () {
+ function SearchBar () {
 
     return (
         <>
         </>
     )
 }
+export default SearchBar;
