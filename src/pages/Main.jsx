@@ -13,7 +13,7 @@ export function Main () {
 
         <h1>메인 페이지</h1>
 
-        <button onClick={handleMove}></button>
+        <button onClick={handleMove}>리스트로 이동</button>
        
         </>
     )
