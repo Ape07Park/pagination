@@ -10,9 +10,6 @@ export function PostItem ({posts}) {
    const [currentPage, setCurrentPage] = useState(1);
    const itemsPerPage = 10;
 
-   console.log(posts);
-   
-
    useEffect(() => {
     if (posts) {
         setPostItems(posts);
@@ -30,11 +27,11 @@ export function PostItem ({posts}) {
     // 현제 아이템
     const currentItems = postItems.slice(indexOfFirstItem, indexOfLastItem);
 
+    // 타입과 검색어를 받아 쿼리로 넘기기 
+
     return (
         <>
-            {/* 검색 */}
-            {/* 서치에서 받은 검색어를 서버로 보내 데이터 가져오기 */}
-            <SearchBar />
+           
 
             {/* 내용 map 하기 */}
             {currentItems.map((data) => (
