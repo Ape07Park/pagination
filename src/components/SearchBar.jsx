@@ -6,8 +6,6 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc }) {
     const [sortType, setSortType] = useState("");
     const [isDesc, setIsDesc] = useState(false);
 
-    const [openSearchInput, setOpenSearchInput] = useState(false);
-
     // 검색어 장바구니의 내용물을 담는 곳
     const [multipleTerm, setMultipleTerm] = useState([]);
 
@@ -53,13 +51,20 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc }) {
         }
     };
 
-   // 검색을 하면 체크 박스 나오며 체크박스 된 것은 맨 위의 검색어 장바구니에 추가 됨. 검색어 장바구니에 있는 것은 다른 검색 버튼 클릭 시 서버에서 데이터 가져옴
+    // 검색을 하면 체크 박스 나오며 체크박스 된 것은 맨 위의 검색어 장바구니에 추가 됨. 검색어 장바구니에 있는 것은 다른 검색 버튼 클릭 시 서버에서 데이터 가져옴
 
     return (
         <div>
-
             <div>
-                {/* 버튼 클릭 -> 검색창 나오기 -> 검색 -> 검색 결과 나오고 옆에 체크박스 -> 채크 박스 된 거 검색어에 추가 -> 자료보기 클릭 -> 관련 자료 나옴  */}
+                <div className="search-basket">
+                    <h4>검색어 장바구니:</h4>
+                    {multipleTerm.map((term, index) => (
+                        <span key={index}>
+                            {term}
+                            {index < multipleTerm.length - 1 ? ', ' : ''}
+                        </span>
+                    ))}
+                </div>
 
             </div>
 
