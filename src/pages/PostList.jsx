@@ -11,6 +11,7 @@ export function PostList() {
     const [term, setTerm] = useState('');
     const [sortType, setSortType] = useState('');
     const [isDesc, setIsDesc] = useState(false);
+    const [selectedItems, setSelectedItems] = useState([]);
 
     useEffect(() => {
         const getData = async () => {
@@ -34,6 +35,14 @@ export function PostList() {
         handleQuery(term, type, sortType, isDesc);
     }, [term, type, sortType, isDesc]);
 
+    // 검색 장바구니 데이터 받기 
+    const sendSelectedItemToSearchBar = () => {
+        
+        return selectedItems;
+    }
+
+    // 검색 장바구니 데이터 넘겨주기
+
     return (
         <>
             <h2>리스트</h2>
@@ -42,9 +51,10 @@ export function PostList() {
                 onType={setType}
                 onSort={setSortType}
                 onIsDesc={setIsDesc}
+                sendSelectedItemToSearchBar={sendSelectedItemToSearchBar}
             />
             <div>
-                {datas && <PostItem posts={datas} totalCount={totalCount} />}
+                {datas && <PostItem posts={datas} totalCount={totalCount} sendSelectedItem={setSelectedItems}/>}
             </div>
         </>
     );

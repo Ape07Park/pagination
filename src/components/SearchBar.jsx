@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function SearchBar({ onTerm, onType, onSort, onIsDesc }) {
+function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchBar }) {
     const [term, setTerm] = useState("");
     const [type, setType] = useState("title");
     const [sortType, setSortType] = useState("");
@@ -50,6 +50,11 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc }) {
             handleSearch();
         }
     };
+
+    useEffect(() => {
+        setMultipleTerm(sendSelectedItemToSearchBar);
+    }, [sendSelectedItemToSearchBar])
+
 
     // 검색을 하면 체크 박스 나오며 체크박스 된 것은 맨 위의 검색어 장바구니에 추가 됨. 검색어 장바구니에 있는 것은 다른 검색 버튼 클릭 시 서버에서 데이터 가져옴
 
