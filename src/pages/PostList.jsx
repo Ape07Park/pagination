@@ -37,7 +37,6 @@ export function PostList() {
         handleQuery(term, type, sortType);
     }, [term, type, sortType]);
 
-    // TODO 제목이나 컨텐츠 클릭 시 view 페이지로 이동
 
     return (
         <>

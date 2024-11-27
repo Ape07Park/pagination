@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import Paging from "../components/Paging";
+import { useNavigate } from "react-router-dom";
 
 // 내용물
 export function PostItem ({posts}) {
@@ -8,6 +9,7 @@ export function PostItem ({posts}) {
    const [postItems, setPostItems] = useState([]);
    const [currentPage, setCurrentPage] = useState(1);
    const itemsPerPage = 10;
+   const navigate = useNavigate();
 
    useEffect(() => {
     if (posts) {
@@ -26,18 +28,23 @@ export function PostItem ({posts}) {
     // 현제 아이템
     const currentItems = postItems.slice(indexOfFirstItem, indexOfLastItem);
 
-    // 타입과 검색어를 받아 쿼리로 넘기기 
+    
+
+     // TODO 제목이나 컨텐츠 클릭 시 view 페이지로 이동
+    // 클릭 -> 페이지 이동
+    const goToView = () => {
+        navigate('/view')
+    }
 
     return (
         <>
-           
 
             {/* 내용 map 하기 */}
             {currentItems.map((data) => (
                 <ul key={data.id}>
                     <li>id: {data.id}</li>
-                    <li>title: {data.title}</li>
-                    <li>content: {data.body}</li>
+                    <li onClick={goToView}>title: {data.title}</li>
+                    <li onClick={goToView}>content: {data.body}</li>
                 </ul>
             ))}
 
