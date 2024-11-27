@@ -28,11 +28,9 @@ export function PostItem ({posts}) {
     // 현제 아이템
     const currentItems = postItems.slice(indexOfFirstItem, indexOfLastItem);
 
-    
-
-     // TODO 제목이나 컨텐츠 클릭 시 view 페이지로 이동
     // 클릭 -> 페이지 이동
     const goToView = (id) => {
+        
         navigate('/view', {state : {id: id}});
     }
 
@@ -43,8 +41,8 @@ export function PostItem ({posts}) {
             {currentItems.map((data) => (
                 <ul key={data.id}>
                     <li>id: {data.id}</li>
-                    <li onClick={() => goToView()}>title: {data.title}</li>
-                    <li onClick={() => goToView()}>content: {data.body}</li>
+                    <li onClick={() => goToView(data.id)}>title: {data.title}</li>
+                    <li onClick={() => goToView(data.id)}>content: {data.body}</li>
                 </ul>
             ))}
 

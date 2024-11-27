@@ -1,45 +1,51 @@
-
 import { useEffect, useState } from "react";
 import { fetchDataById } from "../api/fetch";
 import { useLocation } from "react-router-dom";
-
 
 export function PostView () {
 
     const location = useLocation();
 
-    const id = location.state.id;
+    const postId = location.state.id;
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
 
-    // id로 데이터 뿌리기 
-    // useEffect에 데이터 가져오는 함수 넣기
-    // 엑시오스로 id 넘겨 데이터 가져오기
+    const [dataCatch, setDataCatch] = useState(false);
+
 
      // 데이터 불러오기
      useEffect(() => {
-       
-        const getDataById = async () => {
-            // 검색어 적용시켜 데이터 불러오기
-            const result = await fetchDataById(id);
-            setData(result.data);
-            
-        };
-        getDataById();
-    }, []);
+        if (postId) { // postId가 존재할 때만 데이터 가져오기
+            const getDataById = async () => {
+                try {
+                    const result = await fetchDataById(postId);
+                    setData(result.data);
+                    // 데이터 받음 여부 표시
+                    setDataCatch(true)
+                } catch (error) {
+                    console.error("Error fetching data:", error);
+                }
+            };
+            getDataById();
+        }
+    }, [postId]);
+
+    if (dataCatch === false) { // 데이터가 로드되지 않았을 때 로딩 상태 표시
+        return <div>Loading...</div>;
+    }
 
     return (
         <>
         <h1>상세보기</h1>
         <ul>
             <li>
-                {data.id}
+                {data[0].id}
             </li>
             <li>
-                {data.title}
+                {data[0].title}
             </li>
             <li>
-                {data.body}
+                {data[0].body}
             </li>
         </ul>
         </>
