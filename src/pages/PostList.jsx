@@ -7,9 +7,9 @@ export function PostList() {
     const [datas, setDatas] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [query, setQuery] = useState('');
-    const [type, setType] = useState('title');
+    const [type, setType] = useState('');
     const [term, setTerm] = useState('');
-    const [sortType, setSortType] = useState('title');
+    const [sortType, setSortType] = useState('');
     const [isDesc, setIsDesc] = useState(false);
 
     useEffect(() => {
