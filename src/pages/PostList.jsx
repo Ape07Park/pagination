@@ -10,11 +10,10 @@ export function PostList() {
     const [type, setType] = useState('title');
     const [term, setTerm] = useState('');
     const [sortType, setSortType] = useState('title');
+    const [isDesc, setIsDesc] = useState(false);
 
-    // 데이터 불러오기
     useEffect(() => {
         const getData = async () => {
-            // 검색어 적용시켜 데이터 불러오기
             const result = await fetchData(query);
             setDatas(result.data);
             setTotalCount(result.count);
@@ -22,21 +21,18 @@ export function PostList() {
         getData();
     }, [query]);
 
-    // 검색어 조합
-    const handleQuery = (searchTerm, searchType, sortType) => {
-
-        const searchQuery  = searchTerm ? `${searchType}_like=${searchTerm}` : '';
-        const sortQuery = `${sortType ? `&_sort=${sortType}` : ''}`;
-        const newQuery = `${searchQuery}${sortQuery}`;
-
+    const handleQuery = (searchTerm, searchType, sortType, isDesc) => {
+        const searchQuery = searchTerm ? `${searchType}_like=${searchTerm}` : '';
+        const sortQuery = sortType ? `&_sort=${sortType}` : '';
+        const orderQuery = `&_order=${isDesc ? 'desc' : 'asc'}`;
+        const newQuery = `${searchQuery}${sortQuery}${orderQuery}`;
+        
         setQuery(newQuery);
     };
 
-    // 검색 적용하기
     useEffect(() => {
-        handleQuery(term, type, sortType);
-    }, [term, type, sortType]);
-
+        handleQuery(term, type, sortType, isDesc);
+    }, [term, type, sortType, isDesc]);
 
     return (
         <>
@@ -45,6 +41,7 @@ export function PostList() {
                 onTerm={setTerm}
                 onType={setType}
                 onSort={setSortType}
+                onIsDesc={setIsDesc}
             />
             <div>
                 {datas && <PostItem posts={datas} totalCount={totalCount} />}

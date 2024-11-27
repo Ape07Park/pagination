@@ -1,59 +1,52 @@
 import { useState } from "react";
 
-function SearchBar({ onTerm, onType, onSort }) {
+function SearchBar({ onTerm, onType, onSort, onIsDesc }) {
     const [term, setTerm] = useState("");
     const [type, setType] = useState("title");
-    
-    // 정렬 시 내림차순 여부
+    const [sortType, setSortType] = useState("");
     const [isDesc, setIsDesc] = useState(false);
 
     const handleInputChange = (event) => {
         setTerm(event.target.value);
     };
 
-    // 타입, 검색어 넘기기
     const handleSearch = () => {
         onType(type);
         onTerm(term);
     };
 
-    // 타입 상태 업데이트
     const handleType = (event) => {
         setType(event.target.value);
     };
 
-    // 정렬 기준 변경
+    // 정렬 타입 선택 시 호출되는 함수
+    const handleSort = (newSortType) => { // title이나 body 들어옴
+        
+        // 같은 정렬 타입을 다시 선택한 경우 오름차순/내림차순 토글
+        if (newSortType === sortType) {
+            
+            // 버튼 클릭 시 원래 정렬과 반대로 되야하기에 ! 붙임
 
-    // TODO 조건: -title 처럼 '-정렬조건'의 형태가 되어야 한다.
+            setIsDesc(!isDesc); // 정렬 타입 적용
+            onIsDesc(!isDesc); // 정렬 타입 전달
+        } else {
+            // 새로운 정렬 타입 선택 시 항상 오름차순으로 시작
+            
+            // 상태 적용
+            setSortType(newSortType); 
+            setIsDesc(false); 
 
-    // 처음 정렬 버튼 클릭 -> 내림차순(- 붙이기) -> 다시 정렬 버튼 클릭 -> 오름차순(- 지우기)
+            // 상태 전달
+            onSort(newSortType);  
+            onIsDesc(false); 
+        }
+    };
 
-    const handleSort = (sortType) => {
-
-        onSort(sortType); // 정렬 기준 넘기기
-    }
-
-    // enter 키 눌렀을 때 검색 버튼 누른 것과 같은 효과 나도록 함
     const onKeyPress = (e) => {
         if (e.key === 'Enter') {
             handleSearch();
         }
-    }
-
-    // 오름차순, 내림차순 정렬
-    const handleSortDescAsc = (isDesc) => {
-
-        // if (isDesc === false) {
-        //     setIsDesc(true);
-        //     // 아래와 같은 식으로 하면 계속 '-'가 붙는다
-        //     setSortingType('-' + sortType);  // 정렬 기준 업데이트
-        // } else {
-        //     setIsDesc(false)
-        //     // - 지우는 기능 추가하기
-        //     setSortingType(sortType);  // 정렬 기준 업데이트
-        // }
-
-    }
+    };
 
     return (
         <div>
@@ -61,6 +54,7 @@ function SearchBar({ onTerm, onType, onSort }) {
                 <option value="title">제목</option>
                 <option value="body">컨텐츠</option>
             </select>
+
             <input
                 type="text"
                 placeholder="검색어를 넣으세요"
@@ -72,14 +66,23 @@ function SearchBar({ onTerm, onType, onSort }) {
             <button onClick={handleSearch}>검색</button>
 
             <div>
-                <button onClick={() => handleSort('title')}>이름 순 정렬</button>
-                <button onClick={() => handleSort('body')}>컨텐츠 순 정렬</button>
-            </div>
 
-            <div>
-                <button onClick={() => handleSortDescAsc(isDesc)}>오름차순 정렬</button>
-                <button onClick={() => handleSortDescAsc(isDesc)}>내림차순 정렬</button>
+            <button 
+                    onClick={() => handleSort('id')}
+                >
+                    id 순 정렬 {sortType === 'id' && (isDesc ? '↓' : '↑')}
+                </button>
 
+                <button 
+                    onClick={() => handleSort('title')}
+                >
+                    이름 순 정렬 {sortType === 'title' && (isDesc ? '↓' : '↑')}
+                </button>
+                <button 
+                    onClick={() => handleSort('body')}
+                >
+                    컨텐츠 순 정렬 {sortType === 'body' && (isDesc ? '↓' : '↑')}
+                </button>
             </div>
         </div>
     );
