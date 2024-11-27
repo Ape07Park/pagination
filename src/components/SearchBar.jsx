@@ -23,6 +23,7 @@ function SearchBar({ onTerm, onType, onSort }) {
      // 정렬 기준 변경
      const handleSort = (sortType) => {
         setSortType(sortType);  // Sort 상태 업데이트
+        onSort(sortType);
     }
 
     return (
@@ -40,7 +41,6 @@ function SearchBar({ onTerm, onType, onSort }) {
             <button onClick={handleSearch}>검색</button>
 
             <div>
-
                 <button onClick={() => handleSort('title')}>이름 순 정렬</button>
                 <button onClick={() => handleSort('body')}>컨텐츠 순 정렬</button>
             </div>
