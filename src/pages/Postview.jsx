@@ -12,7 +12,6 @@ export function PostView () {
 
     const [dataCatch, setDataCatch] = useState(false);
 
-
      // 데이터 불러오기
      useEffect(() => {
         if (postId) { // postId가 존재할 때만 데이터 가져오기
