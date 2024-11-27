@@ -23,26 +23,35 @@ export function PostItem({posts}) {
         setCurrentPage(page);
     };
 
-    // const handleCheckboxChange = (data) => {
-    //     setSelectedItems(prev => {
-    //         let newSelectedItems;
-    //         const isSelected = prev.some(item => item.id === data.id);
+    // 선택된 데이터 특정 변수에 담기 및 searchBar에 보내기
+
+    const handleCheckboxChange = (data) => {
+
+        console.log("data 인자 ", data);
+        
+        setSelectedItems(prev => {
+            let newSelectedItems;
+            const isSelected = prev.some(item => item.id === data.id);
             
-    //         if (isSelected) {
-    //             // 이미 선택된 항목이면 제거
-    //             newSelectedItems = prev.filter(item => item.id !== data.id);
-    //         } else {
-    //             // 선택되지 않은 항목이면 추가
-    //             newSelectedItems = [...prev, data];
-    //         }
+            if (isSelected) {
+                // 이미 선택된 항목이면 제거
+                newSelectedItems = prev.filter(item => item.id !== data.id);
+            } else {
+                // 선택되지 않은 항목이면 추가
+                newSelectedItems = [...prev, data];
+            }
             
-    //         // SearchBar의 장바구니에 선택된 항목들의 title을 전달
-    //         const searchTerms = newSelectedItems.map(item => item.title);
-    //         onAddToBasket(searchTerms);
+            // SearchBar의 장바구니에 선택된 항목들의 title을 전달
+            const searchTerms = newSelectedItems.map(item => item.title);
+
+            console.log(searchTerms);
             
-    //         return newSelectedItems;
-    //     });
-    // };
+            // 데이터 전송
+            // onAddToBasket(searchTerms);
+            
+            return newSelectedItems;
+        });
+    };
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -59,8 +68,7 @@ export function PostItem({posts}) {
                     {showCheckboxes && (
                         <input
                             type="checkbox"
-                            // checked={selectedItems.some(item => item.id === data.id)}
-                            // onChange={() => handleCheckboxChange(data)}
+                            onChange={() => handleCheckboxChange(data)}
                         />
                     )}
                     <ul>
