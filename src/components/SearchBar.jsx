@@ -13,17 +13,17 @@ function SearchBar({ onTerm, onType, onSort }) {
     const handleSearch = () => {
         onType(type);
         onTerm(term);
-        onSort(setType);
     };
 
+    // 타입 상태 업데이트
     const handleType = (event) => {
-        setType(event.target.value); // 타입 상태 업데이트
+        setType(event.target.value);
     };
 
      // 정렬 기준 변경
      const handleSort = (sortType) => {
-        setSortType(sortType);  // Sort 상태 업데이트
-        onSort(sortType);
+        setSortType(sortType);  // 정렬 기준 업데이트
+        onSort(sortType); // 정렬 기준 넘기기
     }
 
     return (
