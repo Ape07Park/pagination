@@ -19,7 +19,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Main /> },
       { path: 'list', element: <PostList /> },
-      { path: 'detail', element: <PostView /> },
+      { path: 'view', element: <PostView /> },
     ],
   },
   // {

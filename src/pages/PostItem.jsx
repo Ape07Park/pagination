@@ -32,8 +32,8 @@ export function PostItem ({posts}) {
 
      // TODO 제목이나 컨텐츠 클릭 시 view 페이지로 이동
     // 클릭 -> 페이지 이동
-    const goToView = () => {
-        navigate('/view')
+    const goToView = (id) => {
+        navigate('/view', {state : {id: id}});
     }
 
     return (
@@ -43,8 +43,8 @@ export function PostItem ({posts}) {
             {currentItems.map((data) => (
                 <ul key={data.id}>
                     <li>id: {data.id}</li>
-                    <li onClick={goToView}>title: {data.title}</li>
-                    <li onClick={goToView}>content: {data.body}</li>
+                    <li onClick={() => goToView()}>title: {data.title}</li>
+                    <li onClick={() => goToView()}>content: {data.body}</li>
                 </ul>
             ))}
 
