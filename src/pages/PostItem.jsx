@@ -25,10 +25,15 @@ export function PostItem({posts, totalCount, sendSelectedItem}) {
 
     // 선택된 데이터 특정 변수에 담기 및 searchBar에 보내기
 
+    // TODO 함수 명, 변수 명 교정하기
+
     const handleCheckboxChange = (data) => {
 
         setSelectedItems(prev => {
+            
             let newSelectedItems;
+
+            // 선택 여부 체크
             const isSelected = prev.some(item => item.id === data.id);
             
             if (isSelected) {

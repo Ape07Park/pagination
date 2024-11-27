@@ -5,8 +5,6 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
     const [type, setType] = useState("title");
     const [sortType, setSortType] = useState("");
     const [isDesc, setIsDesc] = useState(false);
-
-    // 검색어 장바구니의 내용물을 담는 곳
     const [multipleTerm, setMultipleTerm] = useState([]);
 
     const handleInputChange = (event) => {
@@ -22,24 +20,13 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
         setType(event.target.value);
     };
 
-    // 정렬 타입 선택 시 호출되는 함수
-    const handleSort = (newSortType) => { // title이나 body 들어옴
-
-        // 같은 정렬 타입을 다시 선택한 경우 오름차순/내림차순 토글
+    const handleSort = (newSortType) => {
         if (newSortType === sortType) {
-
-            // 버튼 클릭 시 원래 정렬과 반대로 되야하기에 ! 붙임
-
-            setIsDesc(!isDesc); // 정렬 타입 적용
-            onIsDesc(!isDesc); // 정렬 타입 전달
+            setIsDesc(!isDesc);
+            onIsDesc(!isDesc);
         } else {
-            // 새로운 정렬 타입 선택 시 항상 오름차순으로 시작
-
-            // 상태 적용
             setSortType(newSortType);
             setIsDesc(false);
-
-            // 상태 전달
             onSort(newSortType);
             onIsDesc(false);
         }
@@ -51,12 +38,15 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
         }
     };
 
+    // 개별 항목 삭제 함수
+    const handleRemoveTerm = (indexToRemove) => {
+        const newTerms = multipleTerm.filter((_, index) => index !== indexToRemove);
+        setMultipleTerm(newTerms);
+    };
+
     useEffect(() => {
         setMultipleTerm(sendSelectedItemToSearchBar);
-    }, [sendSelectedItemToSearchBar])
-
-
-    // 검색을 하면 체크 박스 나오며 체크박스 된 것은 맨 위의 검색어 장바구니에 추가 됨. 검색어 장바구니에 있는 것은 다른 검색 버튼 클릭 시 서버에서 데이터 가져옴
+    }, [sendSelectedItemToSearchBar]);
 
     return (
         <div>
@@ -64,13 +54,25 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
                 <div className="search-basket">
                     <h4>검색어 장바구니:</h4>
                     {multipleTerm.map((term, index) => (
-                        <span key={index}>
+                        <span key={index} style={{ margin: '0 4px' }}>
                             {term}
+                            <button 
+                                onClick={() => handleRemoveTerm(index)}
+                                style={{
+                                    marginLeft: '4px',
+                                    border: 'none',
+                                    background: 'transparent',
+                                    color: '#666',
+                                    cursor: 'pointer',
+                                    padding: '0 4px'
+                                }}
+                            >
+                                ×
+                            </button>
                             {index < multipleTerm.length - 1 ? ', ' : ''}
                         </span>
                     ))}
                 </div>
-
             </div>
 
             <select onChange={handleType} value={type}>
@@ -89,21 +91,14 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
             <button onClick={handleSearch}>검색</button>
 
             <div>
-
-                <button
-                    onClick={() => handleSort('id')}
-                >
+                <button onClick={() => handleSort('id')}>
                     id 순 정렬 {sortType === 'id' && (isDesc ? '↓' : '↑')}
                 </button>
 
-                <button
-                    onClick={() => handleSort('title')}
-                >
+                <button onClick={() => handleSort('title')}>
                     이름 순 정렬 {sortType === 'title' && (isDesc ? '↓' : '↑')}
                 </button>
-                <button
-                    onClick={() => handleSort('body')}
-                >
+                <button onClick={() => handleSort('body')}>
                     컨텐츠 순 정렬 {sortType === 'body' && (isDesc ? '↓' : '↑')}
                 </button>
             </div>
