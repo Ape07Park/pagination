@@ -9,7 +9,9 @@ export function PostItem({posts, totalCount, sendSelectedItem}) {
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedItems, setSelectedItems] = useState([]);
     const [showCheckboxes, setShowCheckboxes] = useState(false);
-    const itemsPerPage = 10;
+    const pageRangeDisplayed = 5;
+    const itemsCountPerPage = 10;
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -30,7 +32,7 @@ export function PostItem({posts, totalCount, sendSelectedItem}) {
     const handleCheckboxChange = (data) => {
 
         setSelectedItems(prev => {
-            
+
             let newSelectedItems;
 
             // 선택 여부 체크
@@ -56,8 +58,8 @@ export function PostItem({posts, totalCount, sendSelectedItem}) {
         });
     };
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const indexOfLastItem = currentPage * itemsCountPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsCountPerPage;
     const currentItems = postItems.slice(indexOfFirstItem, indexOfLastItem);
 
     const goToView = (id) => {
@@ -83,9 +85,12 @@ export function PostItem({posts, totalCount, sendSelectedItem}) {
             ))}
 
             <Paging
-                totalCount={postItems.length}
-                activePage={currentPage}
+                totalItemsCount={postItems.length}
+                itemsCountPerPage={itemsCountPerPage}
+                currentPage={currentPage}
                 onPageChange={handlePageChange}
+                pageRangeDisplayed={pageRangeDisplayed}
+
             />
         </>
     );

@@ -4,7 +4,7 @@
 // 함수 선언식(호이스팅 가능)
 function main() {
     console.log('hello');
-    
+
 }
 
 // 함수 표현식(호이스팅 불가), 익명 함수
@@ -12,19 +12,19 @@ const main = function () {
     console.log("hello");
 }
 
-const main =  () => {
+const main = () => {
     console.log("hello");
 }
 
 
 
-const add =  (a, b) => {
-    return a+b
+const add = (a, b) => {
+    return a + b
 }
 
 // 객체 반환
 const getObj = () => {
-    return {name: 'jim'}
+    return { name: 'jim' }
 }
 
 console.log(getObj());
@@ -36,7 +36,7 @@ function main() {
 }
 
 
-main(1,2,3)
+main(1, 2, 3)
 
 
 // 인자
@@ -45,7 +45,7 @@ const main = (...args) => {
 }
 
 
-main(1,2,3)
+main(1, 2, 3)
 
 
 // ---------------------
@@ -91,7 +91,7 @@ const obj = {
     name: '코딩',
     smallObj: {
         name: '작은 코딩',
-        
+
     }
 };
 
@@ -108,7 +108,7 @@ function main() {
 }
 
 // 바인드 하면 this 값이 {name: 'hi'}로 바뀜
-const mainBind = main.bind({name: 'hi'});
+const mainBind = main.bind({ name: 'hi' });
 mainBind();
 
 const obj = {
@@ -118,6 +118,57 @@ const obj = {
 obj.mainBind();
 
 
+// ----------- 화살표 함수 2 --------------------
+// 화살표 함수의 this는 자신을 감싸는 스코프인 {}의 것을 가져옴
+
+// 화살표 함수의 this는 함수가 선언된 위치에서 결정되며 호출 방식에 따라 바뀌지는 않음. bind가 있어도 무시함
+
+// const obj = {
+//     name: '코딩',
+//     main: function () {
+//         console.log(this);
+//     },
+//     mainArrow: () => {
+// console.log(this); 여기서 this는 window 객체
+// },
+// }; 
+
+// obj.mainArrow();
+
+// const obj = {
+//     name: '코딩',
+//     main: function () {
+//         const innerFuntion = function () {
+//             console.log(this); // 어떤 객체로 부터 호출된 것이 아니라서 window 객체가 나옴
+//         };
+
+//         innerFuntion();
+//     }
+// }
+
+
+const obj = {
+    name: '코딩',
+    main: function () {
+        const innerFuntion =  () => {
+            console.log(this); // obj 객체를 가져옴. main이 참조하는 객체인 obj를 그대로 가져오기에
+        };
+
+        innerFuntion();
+    }
+}
+
+
+const obj = {
+    name: '코딩',
+    main: function () {
+        const innerFuntion = function () {
+            console.log(this); // 어떤 객체로 부터 호출된 것이 아니라서 window 객체가 나옴
+        }.bind({hi:'hi'}); // 일반 함수는 bind로 this가 가리키는 거 지정 가능
+
+        innerFuntion();
+    }
+}
 
 
 

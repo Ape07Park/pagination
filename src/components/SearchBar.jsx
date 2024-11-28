@@ -38,8 +38,31 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
         }
     };
 
+    // SearchBar 컴포넌트:
+
+    // onRemoveItem prop 추가
+    // handleRemoveTerm 함수에서 삭제된 항목을 PostItem에 전달하는 로직 추가
+    
+    // PostItem 컴포넌트:
+    
+    // removedTerm prop 추가
+    // useEffect를 추가하여 removedTerm이 변경될 때 해당 항목의 체크박스 해제
+    // checked 속성을 추가하여 체크박스 상태 관리
+    
+    // PostList 컴포넌트:
+    
+    // removedTerm state 추가
+    // handleRemoveItem 함수 추가
+    // SearchBar와 PostItem 사이의 데이터 전달 로직 구현
+
     // 개별 항목 삭제 함수
     const handleRemoveTerm = (indexToRemove) => {
+
+        // index가 0,1 로 들어가지 데이터의 id로 들어가지 않음
+        // 그럼 title로 비교해야 하나?
+        console.log(indexToRemove);
+        
+
         const newTerms = multipleTerm.filter((_, index) => index !== indexToRemove);
         setMultipleTerm(newTerms);
     };
