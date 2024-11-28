@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 
-export function Main () {
+export default function Main () {
     
     const navigate = useNavigate();
 

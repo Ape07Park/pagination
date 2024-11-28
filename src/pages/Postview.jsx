@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchDataById } from "../api/fetch";
+import axiosInstance, { fetchDataById } from "../api/fetch";
 import { useLocation } from "react-router-dom";
 
-export function PostView () {
+export default function PostView () {
 
     const location = useLocation();
 
@@ -17,8 +17,8 @@ export function PostView () {
         if (postId) { // postId가 존재할 때만 데이터 가져오기
             const getDataById = async () => {
                 try {
-                    const result = await fetchDataById(postId);
-                    setData(result.data);
+                    const response = await axiosInstance.get(`?id=${postId}`);
+                    setData(response.data);
                     // 데이터 받음 여부 표시
                     setDataCatch(true)
                 } catch (error) {

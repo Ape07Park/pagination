@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { PostItem } from "./PostItem";
-import { fetchData } from "../api/fetch";
+import axiosInstance, { fetchData } from "../api/fetch";
 import SearchBar from "../components/SearchBar";
 
-export function PostList() {
+export default function PostList() {
     const [datas, setDatas] = useState([]);
     const [totalCount, setTotalCount] = useState(0);
     const [query, setQuery] = useState('');
@@ -15,9 +15,13 @@ export function PostList() {
 
     useEffect(() => {
         const getData = async () => {
-            const result = await fetchData(query);
-            setDatas(result.data);
-            setTotalCount(result.count);
+            const response = await axiosInstance.get(`?${query}`);
+
+            const totalItems = response.headers['x-total-count'];
+            const res = response.data;
+
+            setDatas(res);
+            setTotalCount(totalItems);
         };
         getData();
     }, [query]);
@@ -35,7 +39,7 @@ export function PostList() {
         handleQuery(term, type, sortType, isDesc);
     }, [term, type, sortType, isDesc]);
 
-    // 검색 장바구니 데이터 받기 
+    // 검색 장바구니 데이터 받기
     const sendSelectedItemToSearchBar = () => {
         
         return selectedItems;
@@ -53,8 +57,10 @@ export function PostList() {
                 onIsDesc={setIsDesc}
                 sendSelectedItemToSearchBar={sendSelectedItemToSearchBar}
             />
+
             <div>
-                {datas && <PostItem posts={datas} totalCount={totalCount} sendSelectedItem={setSelectedItems}/>}
+                {/* 여기서 map 돌려서 PostItem이 반복문을 돌리고 있다는 걸 한 눈에 보이게 하기 */}
+                {datas && <PostItem posts={datas} sendSelectedItem={setSelectedItems}/>}
             </div>
         </>
     );

@@ -3,40 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Main } from './pages/Main';
-import { PostList } from './pages/PostList';
-import { PostView } from './pages/Postview';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: (
-          <App />
-    ),
-    children: [
-      { index: true, element: <Main /> },
-      { path: 'list', element: <PostList /> },
-      { path: 'view', element: <PostView /> },
-    ],
-  },
-  // {
-  //   path: '/error',
-  //   element: <Error />
-  // },
-  // {
-  //   path: '*',
-  //   element: <NotFound />
-  // },
-
-  // { path: '/eng', element: <MainEng /> }
-]);
-
 root.render(
   <React.StrictMode>
-  <RouterProvider router={router} />
+   <App />
   </React.StrictMode>
 );
 

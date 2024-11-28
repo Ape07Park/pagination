@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Paging from "../components/Paging";
 import { useNavigate } from "react-router-dom";
 
-export function PostItem({posts, totalCount, sendSelectedItem}) {
+export function PostItem({posts, sendSelectedItem}) {
 
     const [postItems, setPostItems] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -48,8 +48,6 @@ export function PostItem({posts, totalCount, sendSelectedItem}) {
 
             // SearchBar의 장바구니에 선택된 항목들의 title을 전달
             const searchTerms = newSelectedItems.map(item => item.title);
-
-            console.log(searchTerms);
             
             // 데이터 전송
             sendSelectedItem(searchTerms);
