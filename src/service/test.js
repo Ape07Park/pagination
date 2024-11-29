@@ -150,7 +150,7 @@ obj.mainBind();
 const obj = {
     name: '코딩',
     main: function () {
-        const innerFuntion =  () => {
+        const innerFuntion = () => {
             console.log(this); // obj 객체를 가져옴. main이 참조하는 객체인 obj를 그대로 가져오기에
         };
 
@@ -164,13 +164,97 @@ const obj = {
     main: function () {
         const innerFuntion = function () {
             console.log(this); // 어떤 객체로 부터 호출된 것이 아니라서 window 객체가 나옴
-        }.bind({hi:'hi'}); // 일반 함수는 bind로 this가 가리키는 거 지정 가능
+        }.bind({ hi: 'hi' }); // 일반 함수는 bind로 this가 가리키는 거 지정 가능
 
         innerFuntion();
     }
 }
 
 
+// 자바스크립트에서 자주 쓰는 배열 관련 함수들 
+
+
+
+// const fruits = [
+//     { name: '오렌지', price: 300 },
+//     { name: '사과', price: 700 },
+//     { name: '바나나', price: 500 },
+//     { name: '키위', price: 400 },
+
+// ];
+
+
+// 1. find
+//  배열을 돌면서 조건을 만족하는 첫번째 거 반환
+// 조건 만족하는 거 없으면 undefined 반환
+// const item = fruits.find((fruit, index) => {
+//     if(fruit.price === 500 && index === 2){
+//         return true;
+//     } 
+//     return false;
+// })
+
+// 2. findIndex
+//  조건에 맞는 것의 인덱스 값을 반환
+//  조건 만족하는 거 없을 시 -1 반환
+// const item = fruits.findIndex((fruit, index) => {
+//         if(fruit.price === 500 && index === 2){
+//             return true;
+//         } 
+//         return false;
+//     })
+
+// console.log(item)
+
+// 3. some
+// 배열 안에 조건을 만족하는 것이 1개라도 있으면 true 반환 없으면 false
+
+// const item = fruits.some((fruit) => {
+//         if(fruit.price > 500 ){
+//             return true;
+//         } 
+//         return false;
+//     })
+
+// console.log(item)
+
+// 4. every
+// 배열 안의 요소들이 모두 조건을 만족하면 true 아니면 false
+
+// const item = fruits.every((fruit) => {
+//         if(fruit.price > 100 ){
+//             return true;
+//         } 
+//         return false;
+//     })
+
+// console.log(item)
+
+// 5. filter
+// 배열에서 특정 조건을 만족하는 것들만 빼서 새로운 배열 생성, 이때 원본 배열은 그대로 놔둠
+
+// const cheapFruits = fruits.filter((fruit) => {
+//     if(fruit.price < 400 ){
+//         return true;
+//     } 
+//     return false;
+// })
+
+// console.log(cheapFruits)
+
+// 5. map
+// 원본 배열에 요소를 다른 형태로 변환해서 새로운 배열에 담음
+
+const priceTags = fruits.map((fruit) => {
+    return `${fruit.name} : ${fruit.price}원`;
+});
+
+console.log(priceTags);
+
+
+// 6. reduce
+
+const numbers = [1,2,3,4]
 
 
 

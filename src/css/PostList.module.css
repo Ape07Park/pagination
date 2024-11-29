@@ -1,0 +1,28 @@
+.container {
+    padding: 20px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.postList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.postItem {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.paging {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}

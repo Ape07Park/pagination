@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import styles from "../css/SearchBar.module.css";
 
 function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchBar }) {
     const [term, setTerm] = useState("");
@@ -38,7 +39,7 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
         }
     };
 
-    // SearchBar 컴포넌트:
+      // SearchBar 컴포넌트:
 
     // onRemoveItem prop 추가
     // handleRemoveTerm 함수에서 삭제된 항목을 PostItem에 전달하는 로직 추가
@@ -55,14 +56,9 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
     // handleRemoveItem 함수 추가
     // SearchBar와 PostItem 사이의 데이터 전달 로직 구현
 
-    // 개별 항목 삭제 함수
+    // 개별항목 삭제
     const handleRemoveTerm = (indexToRemove) => {
-
-        // index가 0,1 로 들어가지 데이터의 id로 들어가지 않음
-        // 그럼 title로 비교해야 하나?
         console.log(indexToRemove);
-        
-
         const newTerms = multipleTerm.filter((_, index) => index !== indexToRemove);
         setMultipleTerm(newTerms);
     };
@@ -72,33 +68,24 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
     }, [sendSelectedItemToSearchBar]);
 
     return (
-        <div>
-            <div>
-                <div className="search-basket">
-                    <h4>검색어 장바구니:</h4>
-                    {multipleTerm.map((term, index) => (
-                        <span key={index} style={{ margin: '0 4px' }}>
-                            {term}
-                            <button 
-                                onClick={() => handleRemoveTerm(index)}
-                                style={{
-                                    marginLeft: '4px',
-                                    border: 'none',
-                                    background: 'transparent',
-                                    color: '#666',
-                                    cursor: 'pointer',
-                                    padding: '0 4px'
-                                }}
-                            >
-                                ×
-                            </button>
-                            {index < multipleTerm.length - 1 ? ', ' : ''}
-                        </span>
-                    ))}
-                </div>
+        <div className={styles.container}>
+            <div className={styles.searchBasket}>
+                <h4>검색어 장바구니:</h4>
+                {multipleTerm.map((term, index) => (
+                    <span key={index} className={styles.term}>
+                        {term}
+                        <button 
+                            onClick={() => handleRemoveTerm(index)}
+                            className={styles.removeButton}
+                        >
+                            ×
+                        </button>
+                        {index < multipleTerm.length - 1 ? ', ' : ''}
+                    </span>
+                ))}
             </div>
 
-            <select onChange={handleType} value={type}>
+            <select onChange={handleType} value={type} className={styles.select}>
                 <option value="title">제목</option>
                 <option value="body">컨텐츠</option>
             </select>
@@ -109,19 +96,29 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
                 value={term}
                 onChange={handleInputChange}
                 onKeyDown={onKeyPress}
+                className={styles.input}
             />
 
-            <button onClick={handleSearch}>검색</button>
+            <button onClick={handleSearch} className={styles.button}>검색</button>
 
             <div>
-                <button onClick={() => handleSort('id')}>
+                <button
+                    onClick={() => handleSort('id')}
+                    className={`${styles.sortButton} ${sortType === 'id' && styles.active} ${isDesc && styles.desc}`}
+                >
                     id 순 정렬 {sortType === 'id' && (isDesc ? '↓' : '↑')}
                 </button>
 
-                <button onClick={() => handleSort('title')}>
+                <button
+                    onClick={() => handleSort('title')}
+                    className={`${styles.sortButton} ${sortType === 'title' && styles.active} ${isDesc && styles.desc}`}
+                >
                     이름 순 정렬 {sortType === 'title' && (isDesc ? '↓' : '↑')}
                 </button>
-                <button onClick={() => handleSort('body')}>
+                <button
+                    onClick={() => handleSort('body')}
+                    className={`${styles.sortButton} ${sortType === 'body' && styles.active} ${isDesc && styles.desc}`}
+                >
                     컨텐츠 순 정렬 {sortType === 'body' && (isDesc ? '↓' : '↑')}
                 </button>
             </div>

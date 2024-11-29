@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axiosInstance, { fetchDataById } from "../api/fetch";
+import axiosInstance from "../service/axios";
 import { useLocation } from "react-router-dom";
 
 export default function PostView () {
