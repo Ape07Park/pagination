@@ -7,7 +7,6 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
     const [sortType, setSortType] = useState("");
     const [isDesc, setIsDesc] = useState(false);
     const [multipleTerm, setMultipleTerm] = useState([]);
-    const [isDelete, setIstDelete] = useState(false);
 
     const handleInputChange = (event) => {
         setTerm(event.target.value);
