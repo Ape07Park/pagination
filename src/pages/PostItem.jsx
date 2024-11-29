@@ -4,7 +4,7 @@ export function PostItem({ data, showCheckboxes, onCheckboxChange, onPostClick }
             {showCheckboxes && (
                 <input
                     type="checkbox"
-                    onChange={() => onCheckboxChange(data.id)}
+                    onChange={() => onCheckboxChange(data)}
                 />
             )}
             <ul>

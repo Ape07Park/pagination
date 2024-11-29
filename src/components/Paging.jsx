@@ -60,7 +60,7 @@ export default function Paging({totalItemsCount, itemsCountPerPage, onPageChange
       for (let i = startPage; i <= endPage; i++) {
           pageNumbers.push(
               <li key={i} className={`page-item ${currentPage === i ? 'active' : ''}`}>
-                  <a onClick={() => handlePageClick(i)} href="#" className="page-link">
+                  <a onClick={() => handlePageClick(i)} href="#" >
                       {i}
                   </a>
               </li>
@@ -75,13 +75,13 @@ export default function Paging({totalItemsCount, itemsCountPerPage, onPageChange
 
           <ul className="pagination">
               <li className="page-item">
-                  <a onClick={goFirstPage} href="#!" className="page-link">
+                  <a onClick={goFirstPage} href="#!" >
                       {'<<'}
                   </a>
               </li>
 
               <li className="page-item">
-                  <a onClick={goPreviousPage} href="#!" className="page-link">
+                  <a onClick={goPreviousPage} href="#!" >
                       {'<'}
                   </a>
               </li>
@@ -90,13 +90,13 @@ export default function Paging({totalItemsCount, itemsCountPerPage, onPageChange
               {generatePageNumber()}
 
               <li className="page-item">
-                  <a onClick={goNextPage} href="#!" className="page-link">
+                  <a onClick={goNextPage} href="#!" >
                       {'>'}
                   </a>
               </li>
 
               <li className="page-item">
-                  <a onClick={goLastPage} href="#!" className="page-link">
+                  <a onClick={goLastPage} href="#!">
                       {'>>'}
                   </a>
               </li>

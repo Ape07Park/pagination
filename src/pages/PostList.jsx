@@ -74,11 +74,32 @@ export default function PostList() {
         return selectedItems;
     };
 
-    // TODO 체크박스 선택하기 
-    const handleCheckboxChange = (id) => {
-       
+    // TODO 체크박스에 체크된 거 useCallback 써서 체크되도록 하기 
+
+    // 검색어 장바구니에는 id, title이 들어가게 하기
+
+    // 체크박스 체크되면 검색어 장바구니에 넣는 함수
+    const handleCheckboxChange = (data) => {
+        const currentSelected = [...selectedItems];
+        const dataId = data.id;
+    
+        const existingIndex = currentSelected.findIndex(item => item.id === dataId);
+        
+        if (existingIndex >= 0) {
+            
+            currentSelected.splice(existingIndex, 1);
+        } else {
+            let dataObj = {
+                id: dataId,
+                title: data.title
+            }
+            currentSelected.push(dataObj);
+        }
+        
+        setSelectedItems(currentSelected);
     };
     
+
     return (
         <div className={styles.container}>
             <h2 className={styles.title}>리스트</h2>
