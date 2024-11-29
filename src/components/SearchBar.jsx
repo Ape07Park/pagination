@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "../css/SearchBar.module.css";
 
-function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchBar, }) {
+function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchBar, removeTitle}) {
     const [term, setTerm] = useState("");
     const [type, setType] = useState("title");
     const [sortType, setSortType] = useState("");
     const [isDesc, setIsDesc] = useState(false);
     const [multipleTerm, setMultipleTerm] = useState([]);
+    const [isDelete, setIstDelete] = useState(false);
 
     const handleInputChange = (event) => {
         setTerm(event.target.value);
@@ -39,29 +40,17 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
         }
     };
 
-    // SearchBar 컴포넌트:
-
-    // onRemoveItem prop 추가
-    // handleRemoveTerm 함수에서 삭제된 항목을 PostItem에 전달하는 로직 추가
-
-    // PostItem 컴포넌트:
-
-    // removedTerm prop 추가
-    // useEffect를 추가하여 removedTerm이 변경될 때 해당 항목의 체크박스 해제
-    // checked 속성을 추가하여 체크박스 상태 관리
-
-    // PostList 컴포넌트:
-
-    // removedTerm state 추가
-    // handleRemoveItem 함수 추가
-    // SearchBar와 PostItem 사이의 데이터 전달 로직 구현
-
-    // 개별항목 삭제
-    const handleRemoveTerm = (indexToRemove) => {
-
-        const newTerms = multipleTerm.filter((_, index) => index !== indexToRemove);
-        setMultipleTerm(newTerms);
-    };
+   // 개별항목 삭제
+const handleRemoveTerm = (idToRemove) => {
+    // multipleTerm 배열에서 해당 id를 제외한 새로운 배열 생성
+    const newTerms = multipleTerm.filter(term => term.id !== idToRemove);
+    
+    // 검색어 장바구니 업데이트
+    setMultipleTerm(newTerms);
+    
+    // PostList의 체크박스 해제를 위해 id 전달
+    removeTitle(idToRemove);
+};
 
     useEffect(() => {
         setMultipleTerm(sendSelectedItemToSearchBar);
@@ -80,7 +69,7 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
                         </span>
                         {term.title}
                         <button
-                            onClick={() => handleRemoveTerm(index)}
+                            onClick={() => handleRemoveTerm(term.id)}
                             className={styles.removeButton}
                         >
                             ×

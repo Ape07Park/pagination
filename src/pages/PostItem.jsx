@@ -1,10 +1,11 @@
-export function PostItem({ data, showCheckboxes, onCheckboxChange, onPostClick }) {
+export function PostItem({ data, showCheckboxes, onCheckboxChange, onPostClick, isChecked }) {
     return (
         <div>
             {showCheckboxes && (
                 <input
                     type="checkbox"
                     onChange={() => onCheckboxChange(data)}
+                    checked={isChecked}
                 />
             )}
             <ul>
