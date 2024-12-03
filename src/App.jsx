@@ -1,4 +1,5 @@
 
+import Header from './components/header/Header';
 import Main from './pages/Main';
 import PostList from './pages/PostList';
 import PostView from './pages/Postview';
@@ -9,7 +10,7 @@ function App() {
   return (
     
     <BrowserRouter>
-    {/* 헤더 넣기 */}
+    <Header/>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/list" element={<PostList />} />
