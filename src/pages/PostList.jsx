@@ -13,6 +13,7 @@ export default function PostList() {
 
     // 검색
     const [query, setQuery] = useState('');
+
     const [searchParam, setSearchParam] = useState({
         term: "",
         type: 'title',
@@ -68,23 +69,25 @@ export default function PostList() {
         setQuery(newQuery);
     };
 
+    // 페이지 변경
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
 
+    // 디테일 페이지로 이동
     const goToPostDetailPage = (id) => {
         navigate('/view', { state: { id: id } });
     };
 
+    // 페이징을 위한 계산
     const indexOfLastItem = currentPage * itemsCountPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsCountPerPage;
     const currentItems = datas.slice(indexOfFirstItem, indexOfLastItem);
 
+    // 검색어 장바구니에 있는 거 꺼내기
     const sendSelectedItemToSearchBar = () => {
         return selectedItems;
     };
-
-    // TODO 체크박스에 체크된 거 useCallback 써서 체크되도록 하기
 
     // 검색어 장바구니에는 id, title이 들어가게 하기
 

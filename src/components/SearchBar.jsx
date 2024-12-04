@@ -1,55 +1,26 @@
 import { useCallback, useEffect, useRef } from "react";
 import styles from "../css/SearchBar.module.css";
+import  useSearchParam  from '../hooks/useSearchParam';
 
 // 구조화 방안
 // 1. 검색 파라미터 객체로 묶기
+// 2. 기능 분리
 
 function SearchBar({ onSearchParam, sendSelectedItemToSearchBar, removeTitle }) {
-    const term = useRef("");
-    const type = useRef("title");
-    const sortType = useRef("");
-    const isDesc = useRef(false);
+   
     const multipleTerm = useRef([]);
 
-    const searchParam = {
-        term: "",
-        type: 'title',
-        sortType: "",
-        isDesc: false,
-    };
-
-    // 검색어 변경 핸들러
-    const handleInputChange = (event) => {
-        term.current = event.target.value;
-        searchParam.term = term.current;
-    };
-
-    // 검색 버튼 클릭 시 작동하는 핸들러
-    // searchParam 객체에 값 넣어서 List 컴포넌트로 전송
-    const handleSearch = useCallback(() => {
-        searchParam.term = term.current;
-        searchParam.type = type.current;
-        searchParam.sortType = sortType.current;
-        searchParam.isDesc = isDesc.current;
-        onSearchParam(searchParam);
-    }, [onSearchParam]);
-
-    // 카테고리 변경 핸들러
-    const handleType = (event) => {
-        type.current = event.target.value;
-        handleSearch();
-    };
-
-    // 정렬 핸들러
-    const handleSort = (newSortType) => {
-        if (newSortType === sortType.current) {
-            isDesc.current = !isDesc.current;
-        } else {
-            sortType.current = newSortType;
-            isDesc.current = false;
-        }
-        handleSearch();
-    };
+    // 검색 관련 커스텀 훅
+    const {
+        handleInputChange,
+        handleSearch,
+        handleType,
+        handleSort,
+        term,
+        type,
+        sortType,
+        isDesc,
+    } = useSearchParam(onSearchParam);
 
     const onKeyPress = (e) => {
         if (e.key === 'Enter') {
