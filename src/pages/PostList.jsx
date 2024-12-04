@@ -13,10 +13,12 @@ export default function PostList() {
 
     // 검색
     const [query, setQuery] = useState('');
-    const [type, setType] = useState('');
-    const [term, setTerm] = useState('');
-    const [sortType, setSortType] = useState('');
-    const [isDesc, setIsDesc] = useState(false);
+    const [searchParam, setSearchParam] = useState({
+        term: "",
+        type: 'title',
+        sortType: "",
+        isDesc: false,
+    });
 
     // 페이징
     const [currentPage, setCurrentPage] = useState(1);
@@ -53,19 +55,18 @@ export default function PostList() {
 
     // 검색
     useEffect(() => {
-        handleQuery(term, type, sortType, isDesc);
-    }, [term, type, sortType, isDesc]);
+        handleQuery(searchParam);
+    }, [searchParam]);
 
     // 검색어 완성
-    const handleQuery = (searchTerm, searchType, sortType, isDesc) => {
-        const searchQuery = searchTerm ? `${searchType}_like=${searchTerm}` : '';
-        const sortQuery = sortType ? `&_sort=${sortType}` : '';
-        const orderQuery = `&_order=${isDesc ? 'desc' : 'asc'}`;
+    const handleQuery = (searchParam) => {
+        const searchQuery = searchParam.term ? `${searchParam.type}_like=${searchParam.term}` : '';
+        const sortQuery = searchParam.type ? `&_sort=${searchParam.sortType}` : '';
+        const orderQuery = `&_order=${searchParam.isDesc ? 'desc' : 'asc'}`;
         const newQuery = `${searchQuery}${sortQuery}${orderQuery}`;
 
         setQuery(newQuery);
     };
-
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
@@ -104,7 +105,6 @@ export default function PostList() {
             }
             currentSelected.push(dataObj);
         }
-
         setSelectedItems(currentSelected);
     };
 
@@ -126,10 +126,7 @@ export default function PostList() {
         <div className={styles.container}>
             <h2 className={styles.title} style={{ textAlign: 'center' }}>리스트</h2>
             <SearchBar
-                onTerm={setTerm}
-                onType={setType}
-                onSort={setSortType}
-                onIsDesc={setIsDesc}
+                onSearchParam={handleQuery}
                 sendSelectedItemToSearchBar={sendSelectedItemToSearchBar}
                 removeTitle={handleRemoveCheck}
             />

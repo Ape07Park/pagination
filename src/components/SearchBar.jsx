@@ -1,28 +1,42 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import styles from "../css/SearchBar.module.css";
 
-function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchBar, removeTitle }) {
+// 구조화 방안
+// 1. 검색 파라미터 객체로 묶기
+
+function SearchBar({ onSearchParam, sendSelectedItemToSearchBar, removeTitle }) {
     const term = useRef("");
     const type = useRef("title");
     const sortType = useRef("");
     const isDesc = useRef(false);
     const multipleTerm = useRef([]);
 
+    const searchParam = {
+        term: "",
+        type: 'title',
+        sortType: "",
+        isDesc: false,
+    };
+
     // 검색어 변경 핸들러
     const handleInputChange = (event) => {
         term.current = event.target.value;
+        searchParam.term = term.current;
     };
 
     // 검색 버튼 클릭 시 작동하는 핸들러
-    const handleSearch = () => {
-        onType(type.current);
-        onTerm(term.current);
-    };
+    // searchParam 객체에 값 넣어서 List 컴포넌트로 전송
+    const handleSearch = useCallback(() => {
+        searchParam.term = term.current;
+        searchParam.type = type.current;
+        searchParam.sortType = sortType.current;
+        searchParam.isDesc = isDesc.current;
+        onSearchParam(searchParam);
+    }, [onSearchParam]);
 
     // 카테고리 변경 핸들러
     const handleType = (event) => {
         type.current = event.target.value;
-        // select 변경 시에는 즉시 검색 실행
         handleSearch();
     };
 
@@ -30,27 +44,17 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
     const handleSort = (newSortType) => {
         if (newSortType === sortType.current) {
             isDesc.current = !isDesc.current;
-            onIsDesc(isDesc.current);
         } else {
             sortType.current = newSortType;
             isDesc.current = false;
-            onSort(newSortType);
-            onIsDesc(false);
         }
+        handleSearch();
     };
-
 
     const onKeyPress = (e) => {
         if (e.key === 'Enter') {
             handleSearch();
         }
-    };
-
-    // 검색어 장바구니에서 검색어 제거
-    const handleRemoveTerm = (idToRemove) => {
-        const newTerms = multipleTerm.current.filter(term => term.id !== idToRemove);
-        multipleTerm.current = newTerms;
-        removeTitle(idToRemove);
     };
 
     useEffect(() => {
