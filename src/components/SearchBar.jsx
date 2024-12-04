@@ -1,37 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../css/SearchBar.module.css";
 
-function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchBar, removeTitle}) {
-    const [term, setTerm] = useState("");
-    const [type, setType] = useState("title");
-    const [sortType, setSortType] = useState("");
-    const [isDesc, setIsDesc] = useState(false);
-    const [multipleTerm, setMultipleTerm] = useState([]);
+function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchBar, removeTitle }) {
+    const term = useRef("");
+    const type = useRef("title");
+    const sortType = useRef("");
+    const isDesc = useRef(false);
+    const multipleTerm = useRef([]);
 
+    // 검색어 변경 핸들러
     const handleInputChange = (event) => {
-        setTerm(event.target.value);
+        term.current = event.target.value;
     };
 
+    // 검색 버튼 클릭 시 작동하는 핸들러
     const handleSearch = () => {
-        onType(type);
-        onTerm(term);
+        onType(type.current);
+        onTerm(term.current);
     };
 
+    // 카테고리 변경 핸들러
     const handleType = (event) => {
-        setType(event.target.value);
+        type.current = event.target.value;
+        // select 변경 시에는 즉시 검색 실행
+        handleSearch();
     };
 
+    // 정렬 핸들러
     const handleSort = (newSortType) => {
-        if (newSortType === sortType) {
-            setIsDesc(!isDesc);
-            onIsDesc(!isDesc);
+        if (newSortType === sortType.current) {
+            isDesc.current = !isDesc.current;
+            onIsDesc(isDesc.current);
         } else {
-            setSortType(newSortType);
-            setIsDesc(false);
+            sortType.current = newSortType;
+            isDesc.current = false;
             onSort(newSortType);
             onIsDesc(false);
         }
     };
+
 
     const onKeyPress = (e) => {
         if (e.key === 'Enter') {
@@ -39,27 +46,22 @@ function SearchBar({ onTerm, onType, onSort, onIsDesc, sendSelectedItemToSearchB
         }
     };
 
-   // 개별항목 삭제
-const handleRemoveTerm = (idToRemove) => {
-    // multipleTerm 배열에서 해당 id를 제외한 새로운 배열 생성
-    const newTerms = multipleTerm.filter(term => term.id !== idToRemove);
-    
-    // 검색어 장바구니 업데이트
-    setMultipleTerm(newTerms);
-    
-    // PostList의 체크박스 해제를 위해 id 전달
-    removeTitle(idToRemove);
-};
+    // 검색어 장바구니에서 검색어 제거
+    const handleRemoveTerm = (idToRemove) => {
+        const newTerms = multipleTerm.current.filter(term => term.id !== idToRemove);
+        multipleTerm.current = newTerms;
+        removeTitle(idToRemove);
+    };
 
     useEffect(() => {
-        setMultipleTerm(sendSelectedItemToSearchBar);
-
+        multipleTerm.current = sendSelectedItemToSearchBar;
     }, [sendSelectedItemToSearchBar]);
-
 
     return (
         <div className={styles.container}>
-            <div className={styles.searchBasket}>
+            {/* 검색어 장바구니 */}
+
+            {/* <div className={styles.searchBasket}>
                 <h4>검색어 장바구니:</h4>
                 {multipleTerm.map((term, index) => (
                     <span key={index} style={{ margin: '0 4px' }}>
@@ -76,10 +78,13 @@ const handleRemoveTerm = (idToRemove) => {
                         {index < multipleTerm.length - 1 ? ', ' : ''}
                     </span>
                 ))}
+            </div> */}
 
-            </div>
-
-            <select onChange={handleType} value={type} className={styles.select}>
+            <select
+                onChange={handleType}
+                value={type.current}
+                className={styles.select}
+            >
                 <option value="title">제목</option>
                 <option value="body">컨텐츠</option>
             </select>
@@ -87,7 +92,6 @@ const handleRemoveTerm = (idToRemove) => {
             <input
                 type="text"
                 placeholder="검색어를 넣으세요"
-                value={term}
                 onChange={handleInputChange}
                 onKeyDown={onKeyPress}
                 className={styles.input}
@@ -98,22 +102,23 @@ const handleRemoveTerm = (idToRemove) => {
             <div>
                 <button
                     onClick={() => handleSort('id')}
-                    className={`${styles.sortButton} ${sortType === 'id' && styles.active} ${isDesc && styles.desc}`}
+                    className={`${styles.sortButton} ${sortType.current === 'id' && styles.active} ${isDesc.current && styles.desc}`}
                 >
-                    id 순 정렬 {sortType === 'id' && (isDesc ? '↓' : '↑')}
+                    id 순 정렬 {sortType.current === 'id' && (isDesc.current ? '↓' : '↑')}
                 </button>
 
                 <button
                     onClick={() => handleSort('title')}
-                    className={`${styles.sortButton} ${sortType === 'title' && styles.active} ${isDesc && styles.desc}`}
+                    className={`${styles.sortButton} ${sortType.current === 'title' && styles.active} ${isDesc.current && styles.desc}`}
                 >
-                    이름 순 정렬 {sortType === 'title' && (isDesc ? '↓' : '↑')}
+                    이름 순 정렬 {sortType.current === 'title' && (isDesc.current ? '↓' : '↑')}
                 </button>
+
                 <button
                     onClick={() => handleSort('body')}
-                    className={`${styles.sortButton} ${sortType === 'body' && styles.active} ${isDesc && styles.desc}`}
+                    className={`${styles.sortButton} ${sortType.current === 'body' && styles.active} ${isDesc.current && styles.desc}`}
                 >
-                    컨텐츠 순 정렬 {sortType === 'body' && (isDesc ? '↓' : '↑')}
+                    컨텐츠 순 정렬 {sortType.current === 'body' && (isDesc.current ? '↓' : '↑')}
                 </button>
             </div>
         </div>
