@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+/**
+ * @param test
+ */
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(

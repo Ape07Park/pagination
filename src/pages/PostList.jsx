@@ -28,7 +28,9 @@ export default function PostList() {
     const [showCheckboxes, setShowCheckboxes] = useState(false);
     const [selectedItems, setSelectedItems] = useState([]);
 
-    // 아이템 가져오기
+    /**
+     * 데이터 가져오기
+     */
     useEffect(() => {
         const getData = async () => {
             const response = await axiosInstance.get(`?${query}`);
