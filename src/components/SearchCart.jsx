@@ -1,4 +1,4 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { selectedTitle } from "../recoil/selectedTitle";
 import SearchModal from "../pages/SearchModal";
 import { useState } from "react";
@@ -7,10 +7,18 @@ export default function SearchCart() {
     const titleList = useRecoilValue(selectedTitle);
     const [modalOpen, setModalOpen] = useState(false);
 
+    const [title, setTitle] = useRecoilState(selectedTitle);
+
     const handleSearch = () => {
         // 검색 시 모달 나오면서 검색 장바구니에 있던 것들을 모달창에 띄우기
         setModalOpen(true);
     };
+
+    const handleCancel = () => {
+
+        setTitle([]);
+
+    }
 
     return (
         <>
@@ -27,6 +35,9 @@ export default function SearchCart() {
             </ul>
             <div>
                 <button onClick={handleSearch}>검색하기(모달나옴)</button>
+            </div>
+            <div>
+                <button onClick={handleCancel}>초기화</button>
             </div>
 
             <SearchModal
