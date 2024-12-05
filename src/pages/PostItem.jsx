@@ -8,20 +8,24 @@ export function PostItem({ data, showCheckboxes, onPostClick }) {
     const handleCheckedItem = (data) => {
 
         // data는 객체임
-
+        console.log(data);
+        
         // 이미 포함되어 있는지 체크
-        const isAlreadySelected = obj.includes(data.id);
-        let updatedTitle;
+
+        let objId = obj.id;
+        // obj가 없을 때 에러가 발생함
+        const isAlreadySelected = objId.includes(data.id);
+        let updatedObj;
 
         if (isAlreadySelected) {
             // 체크되어 있으면 지우기
-            updatedTitle = obj.filter(item => item !== data.id);
+            updatedObj = obj.filter(item => item.id !== data.id);
         } else {
 
-            updatedTitle = [...obj, data];
+            updatedObj = [...obj, data];
         }
 
-        setObj(updatedTitle);
+        setObj(updatedObj);
     };
 
     return (

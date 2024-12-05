@@ -6,7 +6,7 @@ import  useSearchParam  from '../hooks/useSearchParam';
 // 1. 검색 파라미터 객체로 묶기
 // 2. 기능 분리
 
-function SearchBar({ onSearchParam, removeTitle }) {
+function SearchBar({ onSearchParam }) {
    
     const multipleTerm = useRef([]);
 

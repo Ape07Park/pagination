@@ -3,14 +3,17 @@ import { useCallback, useRef } from "react";
 export default function useSearchParam(onSearchParam) {
 
     const term = useRef("");
+
+    // TODO 추후 수정하기
     const type = useRef("title");
-    const sortType = useRef("");
+
+    const sortType = useRef("id");
     const isDesc = useRef(false);
 
     const searchParam = {
         term: "",
         type: 'title',
-        sortType: "",
+        sortType: "id",
         isDesc: false,
     };
 
