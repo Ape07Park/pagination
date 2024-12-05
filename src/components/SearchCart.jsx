@@ -1,4 +1,10 @@
+import { useRecoilValue } from "recoil";
+import { selectedTitle } from "../recoil/selectedTitle";
+
 export default function SearchCart() {
+
+
+   const titleList = useRecoilValue(selectedTitle);
 
     // const handleCheckboxChange = (data) => {
     //     const currentSelected = [...selectedItems];
@@ -21,6 +27,21 @@ export default function SearchCart() {
 
     return(
         <>
+        <h4 style={{textAlign:'center'}}>
+            검색어 장바구니
+        </h4>
+        <div>
+            개수: {titleList.length}
+        </div>
+        <ul>
+                {titleList.map((title, index) => (
+                    <li key={index}>{title.title}</li>
+                ))}
+            </ul>
+        <div>
+
+        <button>검색하기(모달나옴)</button>
+        </div>
         </>
     );
 }

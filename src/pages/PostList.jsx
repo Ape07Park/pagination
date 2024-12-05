@@ -5,6 +5,7 @@ import SearchBar from "../components/SearchBar";
 import Paging from "../components/Paging";
 import { useNavigate } from "react-router-dom";
 import styles from '../css/PostList.module.css';
+import SearchCart from "../components/SearchCart";
 
 export default function PostList() {
 
@@ -29,7 +30,7 @@ export default function PostList() {
 
     // 체크 박스
     const [showCheckboxes, setShowCheckboxes] = useState(false);
-    const [selectedItems, setSelectedItems] = useState([]);
+    
 
     /**
      * 데이터 가져오기
@@ -84,29 +85,6 @@ export default function PostList() {
     const indexOfFirstItem = indexOfLastItem - itemsCountPerPage;
     const currentItems = datas.slice(indexOfFirstItem, indexOfLastItem);
 
-    // 검색어 장바구니에 있는 거 꺼내기
-    const sendSelectedItemToSearchBar = () => {
-        return selectedItems;
-    };
-
-    // 검색어 장바구니에는 id, title이 들어가게 하기
-
-   
-
-
-    // 아이디 값 받아서 일치하는 거 체크박스 취소하기
-    const handleRemoveCheck = (id) => {
-
-        const currentSelected = [...selectedItems];
-
-        const existingIndex = currentSelected.findIndex(item => item.id === id);
-        if (existingIndex >= 0) {
-            currentSelected.splice(existingIndex, 1);
-        }
-        setSelectedItems(currentSelected);
-
-    }
-
     return (
         <div className={styles.container}>
             <h2 className={styles.title} style={{ textAlign: 'center' }}>리스트</h2>
@@ -116,10 +94,10 @@ export default function PostList() {
             {/* 검색어 장바구니의 검색 클릭시 모달 나오면서 id, title, content가 나오게 */}
             {/* 모달에 추가 검색 누르면 원래 거 있는 상태에서 추가로 넣을 수 있게하기 */}
 
+            <SearchCart/>
+
             <SearchBar
                 onSearchParam={handleQuery}
-               
-                removeTitle={handleRemoveCheck}
             />
 
             <div className={styles.postList}>
@@ -128,10 +106,8 @@ export default function PostList() {
                         key={data.id}
                         data={data}
                         showCheckboxes={showCheckboxes}
-                
                         onPostClick={goToPostDetailPage}
                         className={styles.postItem}
-                        isChecked={selectedItems.some(item => item.id === data.id)}
                     />
                 ))}
             </div>

@@ -1,19 +1,36 @@
 import { useRecoilState } from "recoil";
 import { selectedTitle } from "../recoil/selectedTitle";
 
-export function PostItem({ data, showCheckboxes, onPostClick, isChecked }) {
+export function PostItem({ data, showCheckboxes, onPostClick }) {
 
-    const [title, setTitle] = useRecoilState(selectedTitle);
+    const [obj, setObj] = useRecoilState(selectedTitle);
 
-    // 여기서 선택된 거 title에 담아 searchCart로 넘기기 
+    const handleCheckedItem = (data) => {
+
+        // data는 객체임
+
+        // 이미 포함되어 있는지 체크
+        const isAlreadySelected = obj.includes(data.id);
+        let updatedTitle;
+
+        if (isAlreadySelected) {
+            // 체크되어 있으면 지우기
+            updatedTitle = obj.filter(item => item !== data.id);
+        } else {
+
+            updatedTitle = [...obj, data];
+        }
+
+        setObj(updatedTitle);
+    };
 
     return (
         <div>
             {showCheckboxes && (
                 <input
                     type="checkbox"
-                    onChange={() => (data)}
-                    checked={isChecked}
+                    onChange={() => handleCheckedItem(data)}
+                    checked={obj.includes(data.id)}
                 />
             )}
             <ul>
