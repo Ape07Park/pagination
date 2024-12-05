@@ -114,7 +114,7 @@ export default function PostList() {
 
     // 아이디 값 받아서 일치하는 거 체크박스 취소하기
     const handleRemoveCheck = (id) => {
-        
+
         const currentSelected = [...selectedItems];
 
         const existingIndex = currentSelected.findIndex(item => item.id === id);
