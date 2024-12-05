@@ -6,7 +6,7 @@ import  useSearchParam  from '../hooks/useSearchParam';
 // 1. 검색 파라미터 객체로 묶기
 // 2. 기능 분리
 
-function SearchBar({ onSearchParam, sendSelectedItemToSearchBar, removeTitle }) {
+function SearchBar({ onSearchParam, removeTitle }) {
    
     const multipleTerm = useRef([]);
 
@@ -28,9 +28,6 @@ function SearchBar({ onSearchParam, sendSelectedItemToSearchBar, removeTitle }) 
         }
     };
 
-    useEffect(() => {
-        multipleTerm.current = sendSelectedItemToSearchBar;
-    }, [sendSelectedItemToSearchBar]);
 
     return (
         <div className={styles.container}>

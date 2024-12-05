@@ -91,25 +91,7 @@ export default function PostList() {
 
     // 검색어 장바구니에는 id, title이 들어가게 하기
 
-    // 체크박스 체크되면 검색어 장바구니에 넣는 함수
-    const handleCheckboxChange = (data) => {
-        const currentSelected = [...selectedItems];
-        const dataId = data.id;
-
-        const existingIndex = currentSelected.findIndex(item => item.id === dataId);
-
-        if (existingIndex >= 0) {
-
-            currentSelected.splice(existingIndex, 1);
-        } else {
-            let dataObj = {
-                id: dataId,
-                title: data.title
-            }
-            currentSelected.push(dataObj);
-        }
-        setSelectedItems(currentSelected);
-    };
+   
 
 
     // 아이디 값 받아서 일치하는 거 체크박스 취소하기
@@ -128,9 +110,15 @@ export default function PostList() {
     return (
         <div className={styles.container}>
             <h2 className={styles.title} style={{ textAlign: 'center' }}>리스트</h2>
+
+            {/* 검색어 장바구니 */}
+            {/* 리스트에서 체크 된 거 검색어 장바구니로 보내기  */}
+            {/* 검색어 장바구니의 검색 클릭시 모달 나오면서 id, title, content가 나오게 */}
+            {/* 모달에 추가 검색 누르면 원래 거 있는 상태에서 추가로 넣을 수 있게하기 */}
+
             <SearchBar
                 onSearchParam={handleQuery}
-                sendSelectedItemToSearchBar={sendSelectedItemToSearchBar}
+               
                 removeTitle={handleRemoveCheck}
             />
 
@@ -140,7 +128,7 @@ export default function PostList() {
                         key={data.id}
                         data={data}
                         showCheckboxes={showCheckboxes}
-                        onCheckboxChange={handleCheckboxChange}
+                
                         onPostClick={goToPostDetailPage}
                         className={styles.postItem}
                         isChecked={selectedItems.some(item => item.id === data.id)}
